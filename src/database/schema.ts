@@ -5,7 +5,7 @@ export const keyval = pgTable(
 	{
 		key: varchar({ length: 255 }).primaryKey(),
 		value: jsonb().notNull(),
-		ttl: timestamp(),
+		ttl: timestamp({ withTimezone: true }),
 	},
 	(table) => [index("key_idx").on(table.key), index("ttl_idx").on(table.ttl)],
 );
