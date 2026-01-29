@@ -64,9 +64,9 @@ const consume = async (
 			const data = JSON.parse(msg.content.toString());
 			await handler(data);
 			channel!.ack(msg);
-			console.log(`[AMQP] Message processed from queue: ${queue}`);
+			console.log(`[AMQP] Message processed from queue : ${queue}`);
 		} catch (error) {
-			console.error("[AMQP] Error processing message:", error);
+			console.error("[AMQP] Error processing message : ", error);
 			channel!.nack(msg, false, true);
 		}
 	});
@@ -80,7 +80,7 @@ const close = async (): Promise<void> => {
 		if (connection) await connection.close();
 		console.log("[AMQP] Disconnected");
 	} catch (error) {
-		console.error("[AMQP] Error closing connection:", error);
+		console.error("[AMQP] Error closing connection : ", error);
 	}
 };
 
