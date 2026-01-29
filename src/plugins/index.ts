@@ -44,6 +44,36 @@ const publish = async (
 	console.log(`[AMQP] Published to queue : ${queue}`);
 };
 
+const consume = async (
+	queue: string,
+	handler: (data: Record<string, unknown>) => void | Promise<void>,
+): Promise<void> => {
+	if (!channel) {
+		throw new Error("[AMQP] not connected");
+	}
+
+	await channel.assertQueue(queue, { durable: true });
+
+	channel.consume(queue, async (msg) => {
+		if (!msg) {
+			console.error("[AMQP] Consumer cancelled by server");
+			return;
+		}
+
+		try {
+			const data = JSON.parse(msg.content.toString());
+			await handler(data);
+			channel!.ack(msg);
+			console.log(`[AMQP] Message processed from queue: ${queue}`);
+		} catch (error) {
+			console.error("[AMQP] Error processing message:", error);
+			channel!.nack(msg, false, true);
+		}
+	});
+
+	console.log(`[AMQP] Consumer started for queue: ${queue}`);
+};
+
 const close = async (): Promise<void> => {
 	try {
 		if (channel) await channel.close();
@@ -55,7 +85,7 @@ const close = async (): Promise<void> => {
 };
 
 export const amqp = new Elysia({ name: "amqp" })
-	.decorate("amqp", { publish })
+	.decorate("amqp", { publish, consume })
 	.onStart(async () => {
 		await connect();
 	})
