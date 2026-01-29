@@ -30,6 +30,7 @@ const connect = async (): Promise<void> => {
 const publish = async (
 	queue: string,
 	data: Record<string, unknown>,
+	options?: { persistent?: boolean },
 ): Promise<void> => {
 	if (!channel) {
 		throw new Error("[AMQP] not connected");
@@ -38,7 +39,7 @@ const publish = async (
 	await channel.assertQueue(queue, { durable: true });
 
 	channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)), {
-		persistent: true,
+		persistent: options?.persistent ?? true,
 	});
 
 	console.log(`[AMQP] Published to queue : ${queue}`);
@@ -71,7 +72,7 @@ const consume = async (
 		}
 	});
 
-	console.log(`[AMQP] Consumer started for queue: ${queue}`);
+	console.log(`[AMQP] Consumer started for queue : ${queue}`);
 };
 
 const close = async (): Promise<void> => {
