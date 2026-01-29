@@ -1,15 +1,5 @@
-# Elysia with Bun runtime
+# Kouka
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
 ```bash
-bun create elysia ./elysia-example
+docker build -t spirit-kouka . && docker run -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/kouka" -p 3000:3000 spirit-kouka
 ```
-
-## Development
-To start the development server run:
-```bash
-bun run dev
-```
-
-Open http://localhost:3000/ with your browser to see the result.
