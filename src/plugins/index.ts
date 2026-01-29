@@ -1,10 +1,8 @@
 import { Elysia } from "elysia";
 import * as amqplib from "amqplib";
-import { Channel } from "amqplib";
+import type { Channel, ChannelModel } from "amqplib";
 
-// i dunno why amqplib.Connection give me this type error. it will be any until i fix this part.
-// Type ChannelModel is missing the following properties from type Connection: serverProperties, expectSocketClose, sentSinceLastCheck, recvSinceLastCheck, sendMessage (ts 2739)
-let connection: any = null;
+let connection: ChannelModel | null = null;
 let channel: Channel | null = null;
 
 const connect = async (): Promise<void> => {
