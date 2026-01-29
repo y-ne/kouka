@@ -1,20 +1,22 @@
 {
-  "name": "kouka",
-  "version": "1.0.50",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
-  },
-  "dependencies": {
-    "drizzle-orm": "^0.45.1",
-    "drizzle-typebox": "^0.3.3",
-    "elysia": "latest"
-  },
-  "devDependencies": {
-    "bun-types": "latest"
-  },
-  "module": "src/index.js",
-  "overrides": {
-    "@sinclair/typebox": ">= 0.34.0 < 1"
-  }
+	"name": "kouka",
+	"version": "1.0.1",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts"
+	},
+	"dependencies": {
+		"drizzle-orm": "^0.45.1",
+		"drizzle-typebox": "^0.3.3",
+		"elysia": "latest",
+		"postgres": "^3.4.8"
+	},
+	"devDependencies": {
+		"bun-types": "latest",
+		"drizzle-kit": "^0.31.8"
+	},
+	"module": "src/index.js",
+	"overrides": {
+		"@sinclair/typebox": ">= 0.34.0 < 1"
+	}
 }
